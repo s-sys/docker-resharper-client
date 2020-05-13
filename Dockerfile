@@ -22,7 +22,10 @@ RUN apt-get update \
     dotnet-runtime-3.1 \
     && rm -rf /var/lib/apt/lists/* && apt autoclean
 
-ADD ./resources/resharper.tar.gz /opt/
+RUN wget https://download.jetbrains.com/resharper/ReSharperUltimate.2020.1.2/JetBrains.ReSharper.CommandLineTools.Unix.2020.1.2.tar.gz \
+    && mkdir /opt/resharper/ \
+    && tar -zxvf JetBrains.ReSharper.CommandLineTools.Unix.2020.1.2.tar.gz -C /opt/resharper/
+COPY ./scripts/resharper.sh /opt/resharper/
 RUN ln -s /opt/resharper/resharper.sh /usr/bin/resharper
 
 WORKDIR /inspections
